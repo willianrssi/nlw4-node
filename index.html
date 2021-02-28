@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        .container {
+            align-items: center;
+            align-content: center;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            width: 800px;
+        }
+
+        .value, button[type="submit"] {
+            cursor: pointer;
+            border: 2px solid #8257e6;
+            outline: 0;
+            padding: 6px;
+            margin: 5px;
+            background: #8257e6;
+            color: #FFF;
+            border-radius: 6px;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .value.selected {
+            background: #FFF;
+            color: #8257e6;
+        }
+
+        .level {
+            display: flex;
+            margin: 10px;
+            justify-content: space-between;
+            width: 350px;
+        }
+
+        .answers {
+            display: flex;
+            justify-content: space-between;
+            width: 350px;
+        }
+
+        .motivation {
+            display: flex;
+            flex-direction: column;
+            margin-top: 16px;
+            width: 350px;
+        }
+
+        .motivation textarea {
+            width: 100%;
+        }
+
+        button[type="submit"] {
+            margin-top: 16px;
+            margin-bottom: 8px;
+            width: 350px;
+        }
+
+        button[type="submit"]:disabled{
+            background: #e5e5e5;
+            border-color: #e5e5e5;
+            cursor: default;
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <label>Olá <strong>{{name}} Tudo bem ?</strong></label>
+
+        <h3>{{title}}</h3>
+        <br />
+        <strong>{{description}}</strong>
+
+        <div class="level">
+            <span>Pouco provável</span>
+            <span>Muito Provável</span>
+        </div>
+
+        <div class="answers">
+            <button value="1" class="value" onclick="setValue(1)">1</button>
+            <button value="2" class="value" onclick="setValue(2)">2</button>
+            <button value="3" class="value" onclick="setValue(3)">3</button>
+            <button value="4" class="value" onclick="setValue(4)">4</button>
+            <button value="5" class="value" onclick="setValue(5)">5</button>
+            <button value="6" class="value" onclick="setValue(6)">6</button>
+            <button value="7" class="value" onclick="setValue(7)">7</button>
+            <button value="8" class="value" onclick="setValue(8)">8</button>
+            <button value="9" class="value" onclick="setValue(9)">9</button>
+            <button value="10" class="value" onclick="setValue(10)">10</button>
+        </div>
+
+        <div class="motivation">
+            <label for="textarea-motivation">O que te motivou a avaliar com esta nota? (opcional):</label>
+            <textarea rows="10" placeholder="" name="" id="textarea-motivation"></textarea>
+        </div>
+
+        <button onclick="sendNPS()" disabled type="submit">Enviar</button>
+
+        <strong>Sua opnião é muito importante para nós ;)</strong>
+    </div>
+
+    <script>
+        let finalValue = null;
+
+        const setValue = (value) => {
+            const resetButtons = document.querySelectorAll(`.value`).forEach(item => {item.classList.remove("selected")})
+            const button = document.querySelector(`.value[value="${value}"]`)
+            const buttonSend = document.querySelector(`button[type="submit"]`).disabled = false
+            button.classList.add("selected")
+            finalValue = value;
+        }
+
+        const sendNPS = () => { 
+            const motivation = document.querySelector("textarea").value
+            console.log(finalValue)
+            console.log(motivation)
+            windows.location = `{{link}}/${finalValue}?u={{id}}&motivation="${motivation}"`
+        }
+
+    </script>
+</body>
+
+</html>
